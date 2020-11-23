@@ -12,7 +12,11 @@ const Home: React.FC = () => {
   return (
     <div>
       <Head>
-        <title>Create Next App</title>
+        <title>Ambulatório - Consulta clínica</title>
+        <meta
+          name="description"
+          content="Esquema de prontuário do paciente para consultas ambulatoriais."
+        />
       </Head>
       <main>
         <Flex
