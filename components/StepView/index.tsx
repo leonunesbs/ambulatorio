@@ -1,6 +1,8 @@
 // eslint-disable-next-line no-use-before-define
 import React, {
+  Dispatch,
   MutableRefObject,
+  SetStateAction,
   useCallback,
   useEffect,
   useState
@@ -13,6 +15,7 @@ import HDA from './_3HDA'
 import HPP from './_4HPP'
 import HF from './_5HF'
 import HS from './_6HS'
+import Finalizar from './_7Finalizar'
 
 export interface FinalData {
   ID?: {
@@ -42,14 +45,15 @@ export interface FinalData {
 }
 
 export interface StepViewProps {
-  currentStep: number
+  currentStep?: number
+  setCurrentStep?: Dispatch<SetStateAction<number>>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  getInitialData: (stepTitle: string) => any
-  focusContinueButtonOnBlur: (
+  getInitialData?: (stepTitle: string) => any
+  focusContinueButtonOnBlur?: (
     btnRef: MutableRefObject<HTMLButtonElement>
   ) => void
-  nextStep: () => void
-  prevStep: () => void
+  nextStep?: () => void
+  prevStep?: () => void
 }
 
 interface ViewProps {
@@ -168,29 +172,44 @@ const StepView: React.FC = () => {
         />
       )
     },
+    // {
+    //   step: 7,
+    //   title: 'HD',
+    //   fullTitle: 'Hipótese diagnóstica',
+    //   inputGroup: (
+    //     <HS
+    //       currentStep={currentStep}
+    //       getInitialData={getInitialData}
+    //       focusContinueButtonOnBlur={focusContinueButtonOnBlur}
+    //       nextStep={nextStep}
+    //       prevStep={prevStep}
+    //     />
+    //   )
+    // },
+    // {
+    //   step: 8,
+    //   title: 'CD',
+    //   fullTitle: 'Conduta',
+    //   inputGroup: (
+    //     <HS
+    //       currentStep={currentStep}
+    //       focusContinueButtonOnBlur={focusContinueButtonOnBlur}
+    //       getInitialData={getInitialData}
+    //       nextStep={nextStep}
+    //       prevStep={prevStep}
+    //     />
+    //   )
+    // }
     {
       step: 7,
-      title: 'HD',
-      fullTitle: 'Hipótese diagnóstica',
+      title: 'FN',
+      fullTitle: 'Finalizar',
       inputGroup: (
-        <HS
+        <Finalizar
           currentStep={currentStep}
+          setCurrentStep={setCurrentStep}
           getInitialData={getInitialData}
           focusContinueButtonOnBlur={focusContinueButtonOnBlur}
-          nextStep={nextStep}
-          prevStep={prevStep}
-        />
-      )
-    },
-    {
-      step: 8,
-      title: 'CD',
-      fullTitle: 'Conduta',
-      inputGroup: (
-        <HS
-          currentStep={currentStep}
-          focusContinueButtonOnBlur={focusContinueButtonOnBlur}
-          getInitialData={getInitialData}
           nextStep={nextStep}
           prevStep={prevStep}
         />
@@ -223,6 +242,8 @@ const StepView: React.FC = () => {
       <StepHeading
         text={getStepHeadingText()}
         step={getStepHeadingStep()}
+        currentStep={currentStep}
+        setCurrentStep={setCurrentStep}
         mb={4}
       />
       <Flex flexDir="column" bg="blue.400" mb={4} borderRadius="md" p={[4, 10]}>

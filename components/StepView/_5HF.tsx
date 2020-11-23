@@ -1,11 +1,12 @@
 // eslint-disable-next-line no-use-before-define
-import React, { useCallback, useEffect, useRef } from 'react'
-import { Button, Stack } from '@chakra-ui/react'
+import React, { useCallback, useRef } from 'react'
+import { Stack } from '@chakra-ui/react'
 import { Form } from '@unform/web'
 import { FormHandles, SubmitHandler } from '@unform/core'
 import { StepViewProps } from '.'
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md'
 import Textarea from '../Textarea'
+import ContinuarButton from '../ContinuarButton'
+import VoltarButton from '../VoltarButton'
 
 const HF: React.FC<StepViewProps> = ({
   currentStep,
@@ -16,8 +17,6 @@ const HF: React.FC<StepViewProps> = ({
 }) => {
   const formRef = useRef<FormHandles>(null)
   const btnRef = useRef<HTMLButtonElement>(null)
-
-  useEffect(() => formRef.current.getFieldRef('hf').focus(), [])
 
   const handleSubmit: SubmitHandler<FormData> = useCallback(() => {
     const data = JSON.stringify(formRef.current.getData())
@@ -38,34 +37,11 @@ const HF: React.FC<StepViewProps> = ({
           placeholder="Doenças crônicas, neoplasias, mortes súbitas..."
           minH="180px"
           onBlur={() => focusContinueButtonOnBlur(btnRef)}
+          autoFocus
         />
         <Stack direction="row" mt={4} justify="flex-end">
-          <Button
-            leftIcon={<MdKeyboardArrowLeft />}
-            variant="solid"
-            bg="gray.500"
-            color="gray.100"
-            fontWeight="normal"
-            borderRadius="sm"
-            _hover={{ bg: 'blue.400', color: 'blue.500' }}
-            onClick={prevStep}
-            isDisabled={currentStep <= 1}
-          >
-            Voltar
-          </Button>
-          <Button
-            ref={btnRef}
-            rightIcon={<MdKeyboardArrowRight />}
-            variant="solid"
-            bg="blue.500"
-            color="gray.100"
-            fontWeight="normal"
-            borderRadius="sm"
-            _hover={{ bg: 'blue.400', color: 'blue.500' }}
-            type="submit"
-          >
-            Continuar
-          </Button>
+          <VoltarButton prevStep={prevStep} currentStep={currentStep} />
+          <ContinuarButton ref={btnRef} />
         </Stack>
       </Stack>
     </Form>
