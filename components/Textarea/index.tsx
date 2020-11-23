@@ -4,10 +4,9 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Input as ChakraInput,
-  InputProps as ChakraInputProps,
-  SelectProps as ChakraSelectProps,
-  FormHelperText
+  TextareaProps as ChakraTextareaProps,
+  FormHelperText,
+  Textarea as ChakraTextarea
 } from '@chakra-ui/react'
 import { useField } from '@unform/core'
 
@@ -17,10 +16,15 @@ interface Props {
   helperText?: string
 }
 
-type InputProps = ChakraInputProps & Props
+type TextareaProps = ChakraTextareaProps & Props
 
-const Input: React.FC<InputProps> = ({ name, label, helperText, ...rest }) => {
-  const inputRef = useRef<HTMLInputElement & HTMLSelectElement>(null)
+const Textarea: React.FC<TextareaProps> = ({
+  name,
+  label,
+  helperText,
+  ...rest
+}) => {
+  const inputRef = useRef<HTMLTextAreaElement>(null)
   const { fieldName, defaultValue, registerField, error } = useField(name)
 
   useEffect(() => {
@@ -42,14 +46,15 @@ const Input: React.FC<InputProps> = ({ name, label, helperText, ...rest }) => {
         >
           {label}
         </FormLabel>
-        <ChakraInput
-          id={fieldName}
+        <ChakraTextarea
           ref={inputRef}
+          id={fieldName}
           defaultValue={defaultValue}
           bg="gray.100"
           borderRadius="sm"
           {...rest}
         />
+
         {helperText && (
           <FormHelperText fontSize="sm" color="gray.100" fontWeight="light">
             {helperText}
@@ -61,4 +66,4 @@ const Input: React.FC<InputProps> = ({ name, label, helperText, ...rest }) => {
   )
 }
 
-export default Input
+export default Textarea
