@@ -16,6 +16,8 @@ import HPP from './_4HPP'
 import HF from './_5HF'
 import HS from './_6HS'
 import Finalizar from './_7Finalizar'
+import Stepper from '../Stepper'
+import { HotKeys } from 'react-hotkeys'
 
 export interface FinalData {
   ID?: {
@@ -76,6 +78,11 @@ const StepView: React.FC = () => {
       setCurrentStep(currentStep - 1)
     }
   }, [currentStep])
+
+  const hkHandles = {
+    RIGHT: nextStep,
+    LEFT: prevStep
+  }
 
   const getInitialData = useCallback(
     (stepTitle: string) =>
@@ -233,23 +240,42 @@ const StepView: React.FC = () => {
     return componentToRender?.fullTitle
   }, [componentToRender])
 
+  const getStepHeadingSigla = useCallback(() => {
+    return componentToRender?.title
+  }, [componentToRender])
+
   const getStepHeadingStep = useCallback(() => {
     return componentToRender?.step
   }, [componentToRender])
 
   return (
-    <SlideFade in={isOpen} offsetY={40}>
-      <StepHeading
+    <HotKeys handlers={hkHandles}>
+      <Stepper
         text={getStepHeadingText()}
         step={getStepHeadingStep()}
+        sigla={getStepHeadingSigla()}
         currentStep={currentStep}
         setCurrentStep={setCurrentStep}
-        mb={4}
       />
-      <Flex flexDir="column" bg="blue.400" mb={4} borderRadius="md" p={[4, 10]}>
-        {componentToRender?.inputGroup}
-      </Flex>
-    </SlideFade>
+      <SlideFade in={isOpen} offsetY={40}>
+        <StepHeading
+          text={getStepHeadingText()}
+          step={getStepHeadingStep()}
+          currentStep={currentStep}
+          setCurrentStep={setCurrentStep}
+          mb={4}
+        />
+        <Flex
+          flexDir="column"
+          bg="blue.400"
+          mb={4}
+          borderRadius="md"
+          p={[4, 10]}
+        >
+          {componentToRender?.inputGroup}
+        </Flex>
+      </SlideFade>
+    </HotKeys>
   )
 }
 

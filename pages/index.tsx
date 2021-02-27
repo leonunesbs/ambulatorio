@@ -12,7 +12,7 @@ const Home: React.FC = () => {
   return (
     <div>
       <Head>
-        <title>Ambulatório - Consulta clínica</title>
+        <title>Ambulatório</title>
         <meta
           name="description"
           content="Esquema de prontuário do paciente para consultas ambulatoriais."

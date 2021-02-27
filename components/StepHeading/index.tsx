@@ -68,18 +68,7 @@ const StepHeading: React.FC<StepHeadingProps> = ({
   return (
     <Flex align="flex-end" justify="space-between" {...rest}>
       <Stack direction="row" align="center">
-        <Flex
-          bg="blue.500"
-          w="35px"
-          h="35px"
-          align="center"
-          justify="center"
-          borderRadius="20px"
-          color="gray.100"
-        >
-          {step}
-        </Flex>
-        <Heading as="h4" size="sm" color="blue.500">
+        <Heading as="h4" size="md" color="blue.500">
           {text}
         </Heading>
       </Stack>
